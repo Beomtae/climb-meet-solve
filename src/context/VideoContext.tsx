@@ -25,7 +25,8 @@ const mockVideos: Video[] = [
     id: "v1",
     problemId: "1",
     uploader: "김클라이머",
-    youtubeUrl: "https://www.youtube.com/watch?v=2OEL4P1Rz04",
+    youtubeUrl:
+      "https://www.youtube.com/watch?v=3LTXTvWZnLs&pp=ygUM7YG065287J2067CN",
     likes: ["이산악", "박등반"],
     comments: [
       {
@@ -47,7 +48,8 @@ const mockVideos: Video[] = [
     id: "v2",
     problemId: "1",
     uploader: "이산악",
-    youtubeUrl: "https://www.youtube.com/watch?v=6T2b4FqWbUg",
+    youtubeUrl:
+      "https://www.youtube.com/watch?v=P5m_K3Sxui4&pp=ygUM7YG065287J2067CN",
     likes: ["김클라이머"],
     comments: [
       {
@@ -63,7 +65,8 @@ const mockVideos: Video[] = [
     id: "v3",
     problemId: "2",
     uploader: "최등반",
-    youtubeUrl: "https://www.youtube.com/watch?v=8ZK_S-46KwE",
+    youtubeUrl:
+      "https://www.youtube.com/watch?v=nb6N7Uch1sM&pp=ygUM7YG065287J2067CN",
     likes: ["정클라임", "강산악"],
     comments: [
       {
@@ -79,7 +82,8 @@ const mockVideos: Video[] = [
     id: "v4",
     problemId: "3",
     uploader: "이초보",
-    youtubeUrl: "https://www.youtube.com/watch?v=QH2-TGUlwu4",
+    youtubeUrl:
+      "https://www.youtube.com/watch?v=gORKjl_ORFk&pp=ygUM7YG065287J2067CN",
     likes: [],
     comments: [],
     createdAt: new Date().toISOString(),

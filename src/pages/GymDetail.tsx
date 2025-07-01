@@ -3,6 +3,7 @@ import { useParams, Link } from "react-router-dom";
 import { ArrowLeft, MapPin } from "lucide-react";
 import Header from "@/components/Header";
 import { mockGyms, mockProblems } from "@/data/mockData";
+import { useVideoContext } from "@/context/VideoContext";
 
 const GymDetail = () => {
   const { id } = useParams();
@@ -10,6 +11,7 @@ const GymDetail = () => {
   const [selectedSection, setSelectedSection] = useState("");
   const [selectedColor, setSelectedColor] = useState("");
   const [selectedProblem, setSelectedProblem] = useState<any>(null);
+  const { getVideos } = useVideoContext();
 
   if (!gym) {
     return (
@@ -37,6 +39,13 @@ const GymDetail = () => {
       (selectedColor === "" || problem.color === selectedColor)
     );
   });
+
+  function getYoutubeThumbnail(url: string) {
+    const match = url.match(
+      /(?:youtu.be\/|youtube.com\/(?:watch\?v=|embed\/|v\/))([\w-]{11})/
+    );
+    return match ? `https://img.youtube.com/vi/${match[1]}/hqdefault.jpg` : "";
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 to-red-50">
@@ -153,42 +162,54 @@ const GymDetail = () => {
             </div>
           ) : (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredProblems.map((problem) => (
-                <Link
-                  key={problem.id}
-                  to={`/problems/${problem.id}`}
-                  className="cursor-pointer group"
-                >
-                  <div className="bg-gray-50 rounded-xl overflow-hidden hover:shadow-lg transition-all duration-300 group-hover:scale-105">
-                    <div className="aspect-video relative">
-                      <img
-                        src={problem.thumbnail}
-                        alt={problem.title}
-                        className="w-full h-full object-cover"
-                      />
-                      <div className="absolute top-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-sm font-semibold">
-                        {problem.difficulty}
+              {filteredProblems.map((problem) => {
+                const videos = getVideos(problem.id);
+                const bestVideo = videos.reduce(
+                  (prev, curr) =>
+                    curr.likes.length > (prev?.likes.length || 0) ? curr : prev,
+                  videos[0]
+                );
+                return (
+                  <Link
+                    key={problem.id}
+                    to={`/problems/${problem.id}`}
+                    className="cursor-pointer group"
+                  >
+                    <div className="bg-gray-50 rounded-xl overflow-hidden hover:shadow-lg transition-all duration-300 group-hover:scale-105">
+                      <div className="aspect-video relative">
+                        <img
+                          src={
+                            bestVideo
+                              ? getYoutubeThumbnail(bestVideo.youtubeUrl)
+                              : problem.thumbnail
+                          }
+                          alt={problem.title}
+                          className="w-full h-full object-cover"
+                        />
+                        <div className="absolute top-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-sm font-semibold">
+                          {problem.difficulty}
+                        </div>
+                      </div>
+                      <div className="p-4">
+                        <h3 className="font-semibold text-gray-800 mb-1">
+                          {problem.title}
+                        </h3>
+                        <div className="flex items-center space-x-2 text-sm text-gray-600 mb-2">
+                          <span className="bg-orange-100 text-orange-800 px-2 py-1 rounded-full">
+                            {problem.section}
+                          </span>
+                          <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full">
+                            {problem.color}
+                          </span>
+                        </div>
+                        <p className="text-sm text-gray-600">
+                          {problem.description}
+                        </p>
                       </div>
                     </div>
-                    <div className="p-4">
-                      <h3 className="font-semibold text-gray-800 mb-1">
-                        {problem.title}
-                      </h3>
-                      <div className="flex items-center space-x-2 text-sm text-gray-600 mb-2">
-                        <span className="bg-orange-100 text-orange-800 px-2 py-1 rounded-full">
-                          {problem.section}
-                        </span>
-                        <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full">
-                          {problem.color}
-                        </span>
-                      </div>
-                      <p className="text-sm text-gray-600">
-                        {problem.description}
-                      </p>
-                    </div>
-                  </div>
-                </Link>
-              ))}
+                  </Link>
+                );
+              })}
             </div>
           )}
         </div>

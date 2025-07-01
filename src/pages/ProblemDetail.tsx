@@ -39,12 +39,19 @@ const ProblemDetail = () => {
   };
 
   const handleLike = (videoId: string) => {
-    if (!user) return;
+    if (!user) {
+      window.alert("로그인이 필요합니다");
+      return;
+    }
     likeVideo(videoId, user);
   };
 
   const handleAddComment = (videoId: string) => {
-    if (!user || !commentText[videoId]?.trim()) return;
+    if (!user) {
+      window.alert("로그인이 필요합니다");
+      return;
+    }
+    if (!commentText[videoId]?.trim()) return;
     addComment(videoId, user, commentText[videoId]);
     setCommentText((prev) => ({ ...prev, [videoId]: "" }));
   };
@@ -55,7 +62,7 @@ const ProblemDetail = () => {
         <h1 className="text-2xl font-bold mb-2">{problem.title}</h1>
         <div className="mb-4 text-gray-600">{problem.description}</div>
         <div className="mb-6">
-          <div className="font-semibold mb-2">대표 썸네일</div>
+          <div className="font-semibold mb-2">좋아요가 가장 많은 영상</div>
           {bestVideo ? (
             <img
               src={getYoutubeThumbnail(bestVideo.youtubeUrl)}
