@@ -1,73 +1,131 @@
-# Welcome to your Lovable project
+### 배포 URL
 
-## Project info
+https://climb-meet-solve.lovable.app/
 
-**URL**: https://lovable.dev/projects/a6f20757-fa30-42e7-8b6b-be120f7a6439
+## 1. 개요
 
-## How can I edit this code?
+앱 이름: **클라이밋**
 
-There are several ways of editing your application.
+목표:
 
-**Use Lovable**
+- 사용자가 클라이밍 모임을 쉽게 찾고 참여할 수 있다.
+- 사용자가 암장별 문제 풀이 정보를 직관적으로 조회할 수 있다.
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/a6f20757-fa30-42e7-8b6b-be120f7a6439) and start prompting.
+---
 
-Changes made via Lovable will be committed automatically to this repo.
+## 2. 기능 목록
 
-**Use your preferred IDE**
+### 2.1 클라이밍 모임 기능
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+**목적**  
+같이 클라이밍할 사람을 찾고 모임에 참여할 수 있도록 한다.
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+**주요 시나리오**
 
-Follow these steps:
+- 사용자는 모임 목록을 보고 원하는 모임에 참가할 수 있다.
+- 사용자는 새로운 모임을 생성할 수 있다.
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+**기능 상세**
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+- [F1] **모임 목록 조회**
+  - 사용자가 앱에 접속 후 "클라이밍 모임" 버튼을 클릭하면 현재 모집 중인 모임 리스트를 볼 수 있다.
+  - 각 모임은 작성자, 날짜/시간, 장소, 인원, 간단 설명을 포함한다.
+- [F2] **모임 참가**
+  - 사용자가 모임 상세 정보를 열람 후 "참가하기" 버튼을 클릭하면 해당 모임에 참가 상태로 표시된다.
+  - 참가자는 모임 인원 목록에 추가된다.
+- [F3] **모임 생성**
+  - 사용자가 "새 모임 만들기" 버튼을 클릭하여 모임 제목, 장소, 시간, 설명을 입력하고 모임을 생성할 수 있다.
+  - 생성된 모임은 모임 목록에 즉시 반영된다.
+- [F4] **모임 상태 표시**
+  - 각 모임은 "모집 중"/"모집 완료" 상태를 표시한다.
 
-# Step 3: Install the necessary dependencies.
-npm i
+---
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
+### 2.2 암장별 문제 풀이 정보 열람
 
-**Edit a file directly in GitHub**
+**목적**  
+암장별 문제 풀이 영상을 색상과 섹션으로 분류해 쉽게 확인하도록 한다.
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+**주요 시나리오**
 
-**Use GitHub Codespaces**
+- 사용자는 암장을 선택하고 문제 색상 및 섹션을 지정해 풀이 영상을 찾는다.
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+**기능 상세**
 
-## What technologies are used for this project?
+- [F5] **암장 목록 조회**
+  - 사용자가 "암장" 버튼을 클릭하면 등록된 암장 리스트가 화면에 나타난다.
+- [F6] **암장 상세 정보**
+  - 사용자가 특정 암장을 선택하면 해당 암장의 섹션 목록 및 문제 색상 선택 UI가 제공된다.
+- [F7] **문제 풀이 영상(썸네일) 표시**
+  - 사용자가 섹션과 색상을 선택하면 관련 문제 풀이 썸네일 목록이 표시된다.
+  - 영상 클릭 시 모달/전체 화면에 썸네일 확대 및 기본 정보 표시.
+- [F8] **문제 정보 필터링**
+  - 색상 및 섹션 선택에 따라 결과가 즉시 필터링된다.
+- [F9] **풀이 영상 Mock 데이터**
+  - 실제 영상 대신 샘플 썸네일과 간단 설명 텍스트를 표시한다.
 
-This project is built with:
+---
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## 3. 인수 조건
 
-## How can I deploy this project?
+### 사용자 스토리 1 - 모임 참가
 
-Simply open [Lovable](https://lovable.dev/projects/a6f20757-fa30-42e7-8b6b-be120f7a6439) and click on Share -> Publish.
+- **Given:** 사용자가 앱에 접속했을 때
+- **When:** "클라이밍 모임" 버튼을 클릭
+- **Then:** 모집 중인 모임들이 목록으로 나타나며 "참가하기" 버튼을 통해 참가할 수 있다.
 
-## Can I connect a custom domain to my Lovable project?
+### 사용자 스토리 2 - 문제 풀이 정보 열람
 
-Yes, you can!
+- **Given:** 사용자가 앱에 접속했을 때
+- **When:** "암장" 버튼을 클릭
+- **Then:** 암장 선택 후 문제 색상과 섹션을 골라 풀이 썸네일을 확인할 수 있다.
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+---
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+## 4. 화면 흐름 및 프로토타입 범위
+
+- [S1] 홈 화면
+
+  - 클라이밍 모임 버튼
+  - 암장 버튼
+
+- [S2] 모임 리스트 화면
+
+  - 모집 중 모임 목록
+  - "새 모임 만들기" 버튼
+
+- [S3] 모임 상세 화면
+
+  - 모임 정보
+  - "참가하기" 버튼
+
+- [S4] 암장 선택 화면
+
+  - 암장 목록
+
+- [S5] 문제 색상/섹션 선택 화면
+
+  - 섹션 리스트
+  - 색상 선택 UI
+  - 문제 풀이 썸네일 리스트
+
+- [S6] 썸네일 상세 보기 화면
+  - 썸네일 이미지
+  - 문제 정보
+
+---
+
+## 5. 비기능 요구사항
+
+- Mock 데이터로 화면 구성 (실제 DB/API 연동 없음)
+- 모바일 뷰에 최적화
+- 최소한의 클릭으로 기능 사용 가능
+- 페이지 전환 시 로딩 화면 표시
+
+---
+
+## 6. 핵심 가치
+
+- 직관적인 사용성
+- 빠른 문제 풀이 확인
+- 손쉬운 모임 결성 및 참여
