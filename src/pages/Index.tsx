@@ -3,6 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Users, Mountain } from 'lucide-react';
 import Header from '@/components/Header';
+import ClimbingIcon from '@/components/ClimbingIcon';
 
 const Index = () => {
   return (
@@ -12,9 +13,12 @@ const Index = () => {
       <main className="container mx-auto px-4 pt-8">
         {/* Hero Section */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent mb-4">
-            Lovable
-          </h1>
+          <div className="flex items-center justify-center space-x-3 mb-4">
+            <ClimbingIcon className="text-orange-600" size={48} />
+            <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent">
+              클라이밋
+            </h1>
+          </div>
           <p className="text-lg md:text-xl text-gray-600 mb-8">
             클라이밍 동료를 찾고 문제 풀이를 공유하세요
           </p>
@@ -57,7 +61,7 @@ const Index = () => {
 
         {/* 통계 섹션 */}
         <div className="mt-16 bg-white rounded-2xl shadow-lg p-8 max-w-4xl mx-auto">
-          <h3 className="text-2xl font-bold text-center text-gray-800 mb-8">Lovable과 함께하는 클라이밍</h3>
+          <h3 className="text-2xl font-bold text-center text-gray-800 mb-8">클라이밋과 함께하는 클라이밍</h3>
           <div className="grid grid-cols-3 gap-8 text-center">
             <div>
               <div className="text-3xl font-bold text-orange-600 mb-2">50+</div>
