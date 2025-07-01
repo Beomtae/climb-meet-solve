@@ -1,57 +1,70 @@
-
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { ArrowLeft } from 'lucide-react';
-import Header from '@/components/Header';
-import { useToast } from '@/hooks/use-toast';
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { ArrowLeft } from "lucide-react";
+import Header from "@/components/Header";
+import { useToast } from "@/hooks/use-toast";
+import { useMeetupContext } from "@/context/MeetupContext";
+import { useUserContext } from "@/context/UserContext";
 
 const CreateMeetup = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { createMeetup } = useMeetupContext();
+  const { user } = useUserContext();
   const [formData, setFormData] = useState({
-    title: '',
-    date: '',
-    time: '',
-    location: '',
+    title: "",
+    date: "",
+    time: "",
+    location: "",
     maxParticipants: 4,
-    description: ''
+    description: "",
   });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
-    if (!formData.title || !formData.date || !formData.time || !formData.location) {
+
+    if (
+      !formData.title ||
+      !formData.date ||
+      !formData.time ||
+      !formData.location
+    ) {
       toast({
         title: "입력 오류",
         description: "모든 필수 항목을 입력해주세요.",
-        variant: "destructive"
+        variant: "destructive",
       });
       return;
     }
 
+    createMeetup({ ...formData, author: user || "익명" });
     toast({
       title: "모임 생성 완료!",
       description: `${formData.title} 모임이 생성되었습니다.`,
     });
 
     setTimeout(() => {
-      navigate('/meetups');
+      navigate("/meetups");
     }, 1500);
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 to-red-50">
       <Header />
-      
+
       <main className="container mx-auto px-4 py-8">
-        <Link 
+        <Link
           to="/meetups"
           className="flex items-center space-x-2 text-gray-600 hover:text-gray-800 mb-6 transition-colors"
         >
@@ -60,11 +73,16 @@ const CreateMeetup = () => {
         </Link>
 
         <div className="bg-white rounded-2xl shadow-lg p-8 max-w-2xl mx-auto">
-          <h1 className="text-3xl font-bold text-gray-800 mb-6">새 모임 만들기</h1>
+          <h1 className="text-3xl font-bold text-gray-800 mb-6">
+            새 모임 만들기
+          </h1>
 
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <label htmlFor="title" className="block text-sm font-semibold text-gray-700 mb-2">
+              <label
+                htmlFor="title"
+                className="block text-sm font-semibold text-gray-700 mb-2"
+              >
                 모임 제목 *
               </label>
               <input
@@ -80,7 +98,10 @@ const CreateMeetup = () => {
 
             <div className="grid md:grid-cols-2 gap-4">
               <div>
-                <label htmlFor="date" className="block text-sm font-semibold text-gray-700 mb-2">
+                <label
+                  htmlFor="date"
+                  className="block text-sm font-semibold text-gray-700 mb-2"
+                >
                   날짜 *
                 </label>
                 <input
@@ -94,7 +115,10 @@ const CreateMeetup = () => {
               </div>
 
               <div>
-                <label htmlFor="time" className="block text-sm font-semibold text-gray-700 mb-2">
+                <label
+                  htmlFor="time"
+                  className="block text-sm font-semibold text-gray-700 mb-2"
+                >
                   시간 *
                 </label>
                 <input
@@ -109,7 +133,10 @@ const CreateMeetup = () => {
             </div>
 
             <div>
-              <label htmlFor="location" className="block text-sm font-semibold text-gray-700 mb-2">
+              <label
+                htmlFor="location"
+                className="block text-sm font-semibold text-gray-700 mb-2"
+              >
                 장소 *
               </label>
               <input
@@ -124,7 +151,10 @@ const CreateMeetup = () => {
             </div>
 
             <div>
-              <label htmlFor="maxParticipants" className="block text-sm font-semibold text-gray-700 mb-2">
+              <label
+                htmlFor="maxParticipants"
+                className="block text-sm font-semibold text-gray-700 mb-2"
+              >
                 최대 인원
               </label>
               <select
@@ -134,14 +164,19 @@ const CreateMeetup = () => {
                 onChange={handleChange}
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all"
               >
-                {[2,3,4,5,6,7,8,9,10].map(num => (
-                  <option key={num} value={num}>{num}명</option>
+                {[2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
+                  <option key={num} value={num}>
+                    {num}명
+                  </option>
                 ))}
               </select>
             </div>
 
             <div>
-              <label htmlFor="description" className="block text-sm font-semibold text-gray-700 mb-2">
+              <label
+                htmlFor="description"
+                className="block text-sm font-semibold text-gray-700 mb-2"
+              >
                 모임 설명
               </label>
               <textarea
