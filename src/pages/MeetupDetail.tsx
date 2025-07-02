@@ -30,7 +30,7 @@ const MeetupDetail = () => {
   const handleSendMessage = (e: React.FormEvent) => {
     e.preventDefault();
     if (!newMessage.trim() || !user || !id) return;
-    
+
     sendMessage(id, user, newMessage.trim());
     setNewMessage("");
   };
@@ -147,7 +147,9 @@ const MeetupDetail = () => {
             </div>
 
             <div>
-              <h3 className="text-xl font-bold text-gray-800 mb-4">참가자 목록</h3>
+              <h3 className="text-xl font-bold text-gray-800 mb-4">
+                참가자 목록
+              </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-8">
                 {meetup.participants.map((participant, index) => (
                   <div
@@ -169,7 +171,9 @@ const MeetupDetail = () => {
 
               {/* 실시간 채팅 */}
               <div>
-                <h3 className="text-xl font-bold text-gray-800 mb-4">모임 채팅</h3>
+                <h3 className="text-xl font-bold text-gray-800 mb-4">
+                  모임 채팅
+                </h3>
                 {user && meetup.participants.includes(user) ? (
                   <div className="bg-white rounded-lg border border-orange-200 h-96 flex flex-col">
                     {/* 메시지 목록 */}
@@ -179,7 +183,9 @@ const MeetupDetail = () => {
                           <div
                             key={message.id}
                             className={`flex ${
-                              message.user === user ? "justify-end" : "justify-start"
+                              message.user === user
+                                ? "justify-end"
+                                : "justify-start"
                             }`}
                           >
                             <div
@@ -196,10 +202,13 @@ const MeetupDetail = () => {
                               )}
                               <div className="text-sm">{message.message}</div>
                               <div className="text-xs opacity-70 mt-1">
-                                {new Date(message.timestamp).toLocaleTimeString([], {
-                                  hour: "2-digit",
-                                  minute: "2-digit",
-                                })}
+                                {new Date(message.timestamp).toLocaleTimeString(
+                                  [],
+                                  {
+                                    hour: "2-digit",
+                                    minute: "2-digit",
+                                  }
+                                )}
                               </div>
                             </div>
                           </div>
@@ -232,7 +241,9 @@ const MeetupDetail = () => {
                 ) : (
                   <div className="bg-gray-50 rounded-lg p-6 text-center">
                     <p className="text-gray-600">
-                      {user ? "모임에 참가하시면 채팅에 참여할 수 있습니다." : "로그인 후 모임에 참가하시면 채팅에 참여할 수 있습니다."}
+                      {user
+                        ? "모임에 참가하시면 채팅에 참여할 수 있습니다."
+                        : "로그인 후 모임에 참가하시면 채팅에 참여할 수 있습니다."}
                     </p>
                   </div>
                 )}
@@ -240,12 +251,18 @@ const MeetupDetail = () => {
             </div>
           </div>
 
-          <div className="flex justify-center mt-8">
+          <div className="flex justify-center">
             <button
-              onClick={handleParticipate}
-              disabled={meetup.status === "full" || isParticipating}
+              onClick={() => {
+                if (!user) {
+                  window.alert("로그인이 필요합니다");
+                  return;
+                }
+                handleParticipate();
+              }}
+              disabled={meetup.status === "full" || isParticipating || !user}
               className={`px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 ${
-                meetup.status === "full" || isParticipating
+                meetup.status === "full" || isParticipating || !user
                   ? "bg-gray-300 text-gray-500 cursor-not-allowed"
                   : "bg-gradient-to-r from-orange-500 to-red-500 text-white hover:from-orange-600 hover:to-red-600 shadow-lg hover:shadow-xl"
               }`}
