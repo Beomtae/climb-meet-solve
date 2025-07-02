@@ -1,3 +1,20 @@
+export interface UserProfile {
+  username: string;
+  level: "beginner" | "intermediate" | "advanced";
+  ageGroup: "20s" | "30s" | "40s" | "50s+";
+  gender: "male" | "female" | "other";
+  climbingStyle: "bouldering" | "lead" | "toprope" | "all";
+  techLevel: "V0-V3" | "V4-V7" | "V8-V11" | "V12+";
+}
+
+export interface MeetupConditions {
+  levelRequired?: "beginner" | "intermediate" | "advanced" | "any";
+  ageGroup?: "20s" | "30s" | "40s" | "50s+" | "any";
+  genderPreference?: "male" | "female" | "mixed" | "any";
+  climbingStyle?: "bouldering" | "lead" | "toprope" | "all";
+  techLevel?: "V0-V3" | "V4-V7" | "V8-V11" | "V12+" | "any";
+}
+
 export interface Meetup {
   id: string;
   title: string;
@@ -10,6 +27,7 @@ export interface Meetup {
   description: string;
   status: "recruiting" | "full";
   participants: string[];
+  conditions?: MeetupConditions;
 }
 
 export interface Gym {
@@ -32,6 +50,81 @@ export interface Problem {
   description: string;
 }
 
+export const mockUserProfiles: { [username: string]: UserProfile } = {
+  "김클라이머": {
+    username: "김클라이머",
+    level: "intermediate",
+    ageGroup: "30s",
+    gender: "male",
+    climbingStyle: "bouldering",
+    techLevel: "V4-V7",
+  },
+  "이산악": {
+    username: "이산악",
+    level: "advanced",
+    ageGroup: "30s",
+    gender: "male",
+    climbingStyle: "all",
+    techLevel: "V8-V11",
+  },
+  "박등반": {
+    username: "박등반",
+    level: "beginner",
+    ageGroup: "20s",
+    gender: "female",
+    climbingStyle: "bouldering",
+    techLevel: "V0-V3",
+  },
+  "최등반": {
+    username: "최등반",
+    level: "advanced",
+    ageGroup: "40s",
+    gender: "male",
+    climbingStyle: "bouldering",
+    techLevel: "V12+",
+  },
+  "정클라임": {
+    username: "정클라임",
+    level: "intermediate",
+    ageGroup: "30s",
+    gender: "female",
+    climbingStyle: "lead",
+    techLevel: "V4-V7",
+  },
+  "강산악": {
+    username: "강산악",
+    level: "advanced",
+    ageGroup: "40s",
+    gender: "male",
+    climbingStyle: "all",
+    techLevel: "V8-V11",
+  },
+  "조바위": {
+    username: "조바위",
+    level: "intermediate",
+    ageGroup: "20s",
+    gender: "male",
+    climbingStyle: "bouldering",
+    techLevel: "V4-V7",
+  },
+  "이초보": {
+    username: "이초보",
+    level: "beginner",
+    ageGroup: "20s",
+    gender: "male",
+    climbingStyle: "toprope",
+    techLevel: "V0-V3",
+  },
+  "김신입": {
+    username: "김신입",
+    level: "beginner",
+    ageGroup: "20s",
+    gender: "female",
+    climbingStyle: "bouldering",
+    techLevel: "V0-V3",
+  },
+};
+
 export const mockMeetups: Meetup[] = [
   {
     id: "1",
@@ -45,6 +138,13 @@ export const mockMeetups: Meetup[] = [
     description: "주말에 편하게 클라이밍하실 분들 모집합니다. 초보자도 환영!",
     status: "recruiting",
     participants: ["김클라이머", "이산악", "박등반"],
+    conditions: {
+      levelRequired: "intermediate",
+      ageGroup: "any",
+      genderPreference: "any",
+      climbingStyle: "bouldering",
+      techLevel: "V4-V7",
+    },
   },
   {
     id: "2",
@@ -58,6 +158,13 @@ export const mockMeetups: Meetup[] = [
     description: "볼더링 기술 향상을 위한 스터디 모임입니다.",
     status: "full",
     participants: ["최등반", "정클라임", "강산악", "조바위"],
+    conditions: {
+      levelRequired: "advanced",
+      ageGroup: "any",
+      genderPreference: "any",
+      climbingStyle: "bouldering",
+      techLevel: "V8-V11",
+    },
   },
   {
     id: "3",
@@ -72,6 +179,13 @@ export const mockMeetups: Meetup[] = [
       "클라이밍을 처음 시작하시는 분들을 위한 모임입니다. 천천히 기초부터!",
     status: "recruiting",
     participants: ["이초보", "김신입"],
+    conditions: {
+      levelRequired: "beginner",
+      ageGroup: "20s",
+      genderPreference: "any",
+      climbingStyle: "all",
+      techLevel: "V0-V3",
+    },
   },
 ];
 

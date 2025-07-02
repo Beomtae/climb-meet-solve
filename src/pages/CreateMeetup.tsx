@@ -5,6 +5,7 @@ import Header from "@/components/Header";
 import { useToast } from "@/hooks/use-toast";
 import { useMeetupContext } from "@/context/MeetupContext";
 import { useUserContext } from "@/context/UserContext";
+import { MeetupConditions } from "@/data/mockData";
 
 const CreateMeetup = () => {
   const navigate = useNavigate();
@@ -18,6 +19,14 @@ const CreateMeetup = () => {
     location: "",
     maxParticipants: 4,
     description: "",
+  });
+
+  const [conditions, setConditions] = useState<MeetupConditions>({
+    levelRequired: "any",
+    ageGroup: "any",
+    genderPreference: "any",
+    climbingStyle: "all",
+    techLevel: "any",
   });
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -37,7 +46,7 @@ const CreateMeetup = () => {
       return;
     }
 
-    createMeetup({ ...formData, author: user || "익명" });
+    createMeetup({ ...formData, author: user || "익명", conditions });
     toast({
       title: "모임 생성 완료!",
       description: `${formData.title} 모임이 생성되었습니다.`,
@@ -188,6 +197,94 @@ const CreateMeetup = () => {
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all resize-none"
                 placeholder="모임에 대한 간단한 설명을 입력해주세요..."
               />
+            </div>
+
+            <div className="mb-6">
+              <h3 className="text-lg font-semibold mb-4 text-gray-800">참가 조건 설정</h3>
+              
+              <div className="grid md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    레벨 조건
+                  </label>
+                  <select
+                    value={conditions.levelRequired}
+                    onChange={(e) => setConditions(prev => ({ ...prev, levelRequired: e.target.value as any }))}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg"
+                  >
+                    <option value="any">제한없음</option>
+                    <option value="beginner">초급자</option>
+                    <option value="intermediate">중급자</option>
+                    <option value="advanced">고급자</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    연령대
+                  </label>
+                  <select
+                    value={conditions.ageGroup}
+                    onChange={(e) => setConditions(prev => ({ ...prev, ageGroup: e.target.value as any }))}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg"
+                  >
+                    <option value="any">제한없음</option>
+                    <option value="20s">20대</option>
+                    <option value="30s">30대</option>
+                    <option value="40s">40대</option>
+                    <option value="50s+">50대 이상</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    성별 선호
+                  </label>
+                  <select
+                    value={conditions.genderPreference}
+                    onChange={(e) => setConditions(prev => ({ ...prev, genderPreference: e.target.value as any }))}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg"
+                  >
+                    <option value="any">제한없음</option>
+                    <option value="mixed">남녀무관</option>
+                    <option value="male">남성만</option>
+                    <option value="female">여성만</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    클라이밍 스타일
+                  </label>
+                  <select
+                    value={conditions.climbingStyle}
+                    onChange={(e) => setConditions(prev => ({ ...prev, climbingStyle: e.target.value as any }))}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg"
+                  >
+                    <option value="all">전체</option>
+                    <option value="bouldering">볼더링</option>
+                    <option value="lead">리드클라이밍</option>
+                    <option value="toprope">탑로프</option>
+                  </select>
+                </div>
+
+                <div className="md:col-span-2">
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    기술 레벨
+                  </label>
+                  <select
+                    value={conditions.techLevel}
+                    onChange={(e) => setConditions(prev => ({ ...prev, techLevel: e.target.value as any }))}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg"
+                  >
+                    <option value="any">제한없음</option>
+                    <option value="V0-V3">V0-V3 (초급)</option>
+                    <option value="V4-V7">V4-V7 (중급)</option>
+                    <option value="V8-V11">V8-V11 (고급)</option>
+                    <option value="V12+">V12+ (전문가)</option>
+                  </select>
+                </div>
+              </div>
             </div>
 
             <div className="flex space-x-4">

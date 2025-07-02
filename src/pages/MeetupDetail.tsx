@@ -1,18 +1,39 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useParams, Link } from "react-router-dom";
-import { Calendar, Clock, MapPin, Users, ArrowLeft } from "lucide-react";
+import { Calendar, Clock, MapPin, Users, ArrowLeft, Send } from "lucide-react";
 import Header from "@/components/Header";
 import { useMeetupContext } from "@/context/MeetupContext";
 import { useToast } from "@/hooks/use-toast";
 import { useUserContext } from "@/context/UserContext";
+import { useChatContext } from "@/context/ChatContext";
 
 const MeetupDetail = () => {
   const { id } = useParams();
   const { toast } = useToast();
   const { meetups, participateMeetup } = useMeetupContext();
   const { user } = useUserContext();
+  const { getMessages, sendMessage } = useChatContext();
+  const [newMessage, setNewMessage] = useState("");
+  const messagesEndRef = useRef<HTMLDivElement>(null);
   const meetup = meetups.find((m) => m.id === id);
+  const messages = id ? getMessages(id) : [];
   const [isParticipating, setIsParticipating] = useState(false);
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const handleSendMessage = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newMessage.trim() || !user || !id) return;
+    
+    sendMessage(id, user, newMessage.trim());
+    setNewMessage("");
+  };
 
   if (!meetup) {
     return (
@@ -126,10 +147,8 @@ const MeetupDetail = () => {
             </div>
 
             <div>
-              <h3 className="text-xl font-bold text-gray-800 mb-4">
-                참가자 목록
-              </h3>
-              <div className="space-y-2">
+              <h3 className="text-xl font-bold text-gray-800 mb-4">참가자 목록</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-8">
                 {meetup.participants.map((participant, index) => (
                   <div
                     key={index}
@@ -147,10 +166,81 @@ const MeetupDetail = () => {
                   </div>
                 ))}
               </div>
+
+              {/* 실시간 채팅 */}
+              <div>
+                <h3 className="text-xl font-bold text-gray-800 mb-4">모임 채팅</h3>
+                {user && meetup.participants.includes(user) ? (
+                  <div className="bg-white rounded-lg border border-orange-200 h-96 flex flex-col">
+                    {/* 메시지 목록 */}
+                    <div className="flex-1 p-4 overflow-y-auto">
+                      <div className="space-y-3">
+                        {messages.map((message) => (
+                          <div
+                            key={message.id}
+                            className={`flex ${
+                              message.user === user ? "justify-end" : "justify-start"
+                            }`}
+                          >
+                            <div
+                              className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${
+                                message.user === user
+                                  ? "bg-orange-500 text-white"
+                                  : "bg-gray-100 text-gray-800"
+                              }`}
+                            >
+                              {message.user !== user && (
+                                <div className="text-xs font-semibold mb-1 text-orange-600">
+                                  {message.user}
+                                </div>
+                              )}
+                              <div className="text-sm">{message.message}</div>
+                              <div className="text-xs opacity-70 mt-1">
+                                {new Date(message.timestamp).toLocaleTimeString([], {
+                                  hour: "2-digit",
+                                  minute: "2-digit",
+                                })}
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                        <div ref={messagesEndRef} />
+                      </div>
+                    </div>
+
+                    {/* 메시지 입력 */}
+                    <form
+                      onSubmit={handleSendMessage}
+                      className="border-t border-orange-200 p-4 flex space-x-2"
+                    >
+                      <input
+                        type="text"
+                        value={newMessage}
+                        onChange={(e) => setNewMessage(e.target.value)}
+                        placeholder="메시지를 입력하세요..."
+                        className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
+                      />
+                      <button
+                        type="submit"
+                        disabled={!newMessage.trim()}
+                        className="bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600 disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        <Send className="w-4 h-4" />
+                      </button>
+                    </form>
+                  </div>
+                ) : (
+                  <div className="bg-gray-50 rounded-lg p-6 text-center">
+                    <p className="text-gray-600">
+                      {user ? "모임에 참가하시면 채팅에 참여할 수 있습니다." : "로그인 후 모임에 참가하시면 채팅에 참여할 수 있습니다."}
+                    </p>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
 
-          <div className="flex justify-center">
+          <div className="flex justify-center mt-8">
             <button
               onClick={handleParticipate}
               disabled={meetup.status === "full" || isParticipating}

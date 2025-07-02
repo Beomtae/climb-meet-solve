@@ -12,6 +12,7 @@ import GymDetail from "./pages/GymDetail";
 import NotFound from "./pages/NotFound";
 import { MeetupProvider } from "./context/MeetupContext";
 import { UserProvider } from "./context/UserContext";
+import { ChatProvider } from "./context/ChatContext";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Logout from "./pages/Logout";
@@ -23,29 +24,31 @@ const queryClient = new QueryClient();
 const App = () => (
   <UserProvider>
     <MeetupProvider>
-      <VideoProvider>
-        <QueryClientProvider client={queryClient}>
-          <TooltipProvider>
-            <Toaster />
-            <Sonner />
-            <BrowserRouter>
-              <Routes>
-                <Route path="/" element={<Index />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/signup" element={<Signup />} />
-                <Route path="/logout" element={<Logout />} />
-                <Route path="/meetups" element={<MeetupList />} />
-                <Route path="/meetups/create" element={<CreateMeetup />} />
-                <Route path="/meetups/:id" element={<MeetupDetail />} />
-                <Route path="/gyms" element={<GymList />} />
-                <Route path="/gyms/:id" element={<GymDetail />} />
-                <Route path="/problems/:id" element={<ProblemDetail />} />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </BrowserRouter>
-          </TooltipProvider>
-        </QueryClientProvider>
-      </VideoProvider>
+      <ChatProvider>
+        <VideoProvider>
+          <QueryClientProvider client={queryClient}>
+            <TooltipProvider>
+              <Toaster />
+              <Sonner />
+              <BrowserRouter>
+                <Routes>
+                  <Route path="/" element={<Index />} />
+                  <Route path="/login" element={<Login />} />
+                  <Route path="/signup" element={<Signup />} />
+                  <Route path="/logout" element={<Logout />} />
+                  <Route path="/meetups" element={<MeetupList />} />
+                  <Route path="/meetups/create" element={<CreateMeetup />} />
+                  <Route path="/meetups/:id" element={<MeetupDetail />} />
+                  <Route path="/gyms" element={<GymList />} />
+                  <Route path="/gyms/:id" element={<GymDetail />} />
+                  <Route path="/problems/:id" element={<ProblemDetail />} />
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </BrowserRouter>
+            </TooltipProvider>
+          </QueryClientProvider>
+        </VideoProvider>
+      </ChatProvider>
     </MeetupProvider>
   </UserProvider>
 );
