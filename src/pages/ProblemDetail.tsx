@@ -4,19 +4,13 @@ import { mockProblems } from "@/data/mockData";
 import { useUserContext } from "@/context/UserContext";
 import { useVideoContext } from "@/context/VideoContext";
 
-function getYoutubeThumbnail(url: string) {
-  const match = url.match(
-    /(?:youtu.be\/|youtube.com\/(?:watch\?v=|embed\/|v\/))([\w-]{11})/
-  );
-  return match ? `https://img.youtube.com/vi/${match[1]}/hqdefault.jpg` : "";
-}
 
 const ProblemDetail = () => {
   const { id } = useParams();
   const problem = mockProblems.find((p) => p.id === id);
   const { user } = useUserContext();
   const { getVideos, addVideo, likeVideo, addComment } = useVideoContext();
-  const [youtubeUrl, setYoutubeUrl] = useState("");
+  const [videoFile, setVideoFile] = useState<File | null>(null);
   const [commentText, setCommentText] = useState<{ [videoId: string]: string }>(
     {}
   );
@@ -33,9 +27,11 @@ const ProblemDetail = () => {
 
   const handleAddVideo = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!youtubeUrl.trim() || !user) return;
-    addVideo(problem.id, youtubeUrl.trim(), user);
-    setYoutubeUrl("");
+    if (!videoFile || !user) return;
+    // 실제로는 파일을 서버에 업로드하고 URL을 받아야 하지만, 
+    // mock 데이터를 위해 파일명을 사용
+    addVideo(problem.id, videoFile.name, user);
+    setVideoFile(null);
   };
 
   const handleLike = (videoId: string) => {
@@ -64,11 +60,14 @@ const ProblemDetail = () => {
         <div className="mb-6">
           <div className="font-semibold mb-2">좋아요가 가장 많은 영상</div>
           {bestVideo ? (
-            <img
-              src={getYoutubeThumbnail(bestVideo.youtubeUrl)}
-              alt="대표 썸네일"
+            <video
               className="w-64 h-36 rounded-lg object-cover"
-            />
+              controls
+              poster={problem.thumbnail}
+            >
+              <source src={bestVideo.videoUrl} type="video/mp4" />
+              비디오를 재생할 수 없습니다.
+            </video>
           ) : (
             <img
               src={problem.thumbnail}
@@ -79,17 +78,16 @@ const ProblemDetail = () => {
         </div>
         <form onSubmit={handleAddVideo} className="flex gap-2 mb-8">
           <input
-            type="text"
-            placeholder="유튜브 영상 링크를 입력하세요"
-            value={youtubeUrl}
-            onChange={(e) => setYoutubeUrl(e.target.value)}
+            type="file"
+            accept="video/*"
+            onChange={(e) => setVideoFile(e.target.files?.[0] || null)}
             className="flex-1 px-4 py-2 border border-gray-300 rounded-lg"
             disabled={!user}
           />
           <button
             type="submit"
             className="px-4 py-2 bg-orange-500 text-white rounded-lg"
-            disabled={!user}
+            disabled={!user || !videoFile}
           >
             영상 등록
           </button>
@@ -105,21 +103,19 @@ const ProblemDetail = () => {
               className="mb-8 p-4 border rounded-lg bg-orange-50"
             >
               <div className="flex items-center gap-4 mb-2">
-                <img
-                  src={getYoutubeThumbnail(video.youtubeUrl)}
-                  alt="썸네일"
+                <video
                   className="w-32 h-20 rounded object-cover"
-                />
+                  controls
+                  poster={problem.thumbnail}
+                >
+                  <source src={video.videoUrl} type="video/mp4" />
+                  비디오를 재생할 수 없습니다.
+                </video>
                 <div className="flex-1">
                   <div className="font-semibold">{video.uploader}</div>
-                  <a
-                    href={video.youtubeUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-blue-600 underline text-sm"
-                  >
-                    유튜브에서 보기
-                  </a>
+                  <div className="text-gray-600 text-sm">
+                    파일명: {video.videoUrl.split('/').pop()}
+                  </div>
                   <div className="text-xs text-gray-500 mt-1">
                     등록일: {new Date(video.createdAt).toLocaleString()}
                   </div>

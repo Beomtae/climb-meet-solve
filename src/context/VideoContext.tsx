@@ -4,7 +4,7 @@ export interface Video {
   id: string;
   problemId: string;
   uploader: string;
-  youtubeUrl: string;
+  videoUrl: string;
   likes: string[]; // user 이름 배열
   comments: { id: string; user: string; text: string; createdAt: string }[];
   createdAt: string;
@@ -12,7 +12,7 @@ export interface Video {
 
 interface VideoContextType {
   getVideos: (problemId: string) => Video[];
-  addVideo: (problemId: string, youtubeUrl: string, uploader: string) => void;
+  addVideo: (problemId: string, videoUrl: string, uploader: string) => void;
   likeVideo: (videoId: string, user: string) => void;
   addComment: (videoId: string, user: string, text: string) => void;
 }
@@ -25,8 +25,7 @@ const mockVideos: Video[] = [
     id: "v1",
     problemId: "1",
     uploader: "김클라이머",
-    youtubeUrl:
-      "https://www.youtube.com/watch?v=3LTXTvWZnLs&pp=ygUM7YG065287J2067CN",
+    videoUrl: "/Users/taebeom/Downloads/IMG_0660.MOV",
     likes: ["이산악", "박등반"],
     comments: [
       {
@@ -48,8 +47,7 @@ const mockVideos: Video[] = [
     id: "v2",
     problemId: "1",
     uploader: "이산악",
-    youtubeUrl:
-      "https://www.youtube.com/watch?v=P5m_K3Sxui4&pp=ygUM7YG065287J2067CN",
+    videoUrl: "/Users/taebeom/Downloads/IMG_0660.MOV",
     likes: ["김클라이머"],
     comments: [
       {
@@ -65,8 +63,7 @@ const mockVideos: Video[] = [
     id: "v3",
     problemId: "2",
     uploader: "최등반",
-    youtubeUrl:
-      "https://www.youtube.com/watch?v=nb6N7Uch1sM&pp=ygUM7YG065287J2067CN",
+    videoUrl: "/Users/taebeom/Downloads/IMG_0660.MOV",
     likes: ["정클라임", "강산악"],
     comments: [
       {
@@ -82,8 +79,7 @@ const mockVideos: Video[] = [
     id: "v4",
     problemId: "3",
     uploader: "이초보",
-    youtubeUrl:
-      "https://www.youtube.com/watch?v=gORKjl_ORFk&pp=ygUM7YG065287J2067CN",
+    videoUrl: "/Users/taebeom/Downloads/IMG_0660.MOV",
     likes: [],
     comments: [],
     createdAt: new Date().toISOString(),
@@ -110,14 +106,14 @@ export const VideoProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const addVideo = (
     problemId: string,
-    youtubeUrl: string,
+    videoUrl: string,
     uploader: string
   ) => {
     const newVideo: Video = {
       id: Date.now().toString(),
       problemId,
       uploader,
-      youtubeUrl,
+      videoUrl,
       likes: [],
       comments: [],
       createdAt: new Date().toISOString(),

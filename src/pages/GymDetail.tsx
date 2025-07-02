@@ -40,12 +40,6 @@ const GymDetail = () => {
     );
   });
 
-  function getYoutubeThumbnail(url: string) {
-    const match = url.match(
-      /(?:youtu.be\/|youtube.com\/(?:watch\?v=|embed\/|v\/))([\w-]{11})/
-    );
-    return match ? `https://img.youtube.com/vi/${match[1]}/hqdefault.jpg` : "";
-  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 to-red-50">
@@ -178,11 +172,7 @@ const GymDetail = () => {
                     <div className="bg-gray-50 rounded-xl overflow-hidden hover:shadow-lg transition-all duration-300 group-hover:scale-105">
                       <div className="aspect-video relative">
                         <img
-                          src={
-                            bestVideo
-                              ? getYoutubeThumbnail(bestVideo.youtubeUrl)
-                              : problem.thumbnail
-                          }
+                          src={problem.thumbnail}
                           alt={problem.title}
                           className="w-full h-full object-cover"
                         />
