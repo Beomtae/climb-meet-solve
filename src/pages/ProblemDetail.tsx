@@ -4,13 +4,15 @@ import { mockProblems } from "@/data/mockData";
 import { useUserContext } from "@/context/UserContext";
 import { useVideoContext } from "@/context/VideoContext";
 
-
 const ProblemDetail = () => {
   const { id } = useParams();
   const problem = mockProblems.find((p) => p.id === id);
   const { user } = useUserContext();
   const { getVideos, addVideo, likeVideo, addComment } = useVideoContext();
   const [videoFile, setVideoFile] = useState<File | null>(null);
+  const [uploadedVideos, setUploadedVideos] = useState<{
+    [videoId: string]: string;
+  }>({});
   const [commentText, setCommentText] = useState<{ [videoId: string]: string }>(
     {}
   );
@@ -28,9 +30,11 @@ const ProblemDetail = () => {
   const handleAddVideo = (e: React.FormEvent) => {
     e.preventDefault();
     if (!videoFile || !user) return;
-    // 실제로는 파일을 서버에 업로드하고 URL을 받아야 하지만, 
-    // mock 데이터를 위해 파일명을 사용
-    addVideo(problem.id, videoFile.name, user);
+    // mock 데이터에는 파일명만 저장, 실제 미리보기는 상태로 관리
+    const tempId = Date.now().toString();
+    const url = URL.createObjectURL(videoFile);
+    addVideo(problem.id, tempId, user); // videoUrl에 tempId 저장
+    setUploadedVideos((prev) => ({ ...prev, [tempId]: url }));
     setVideoFile(null);
   };
 
@@ -60,14 +64,23 @@ const ProblemDetail = () => {
         <div className="mb-6">
           <div className="font-semibold mb-2">좋아요가 가장 많은 영상</div>
           {bestVideo ? (
-            <video
-              className="w-64 h-36 rounded-lg object-cover"
-              controls
-              poster={problem.thumbnail}
-            >
-              <source src={bestVideo.videoUrl} type="video/mp4" />
-              비디오를 재생할 수 없습니다.
-            </video>
+            uploadedVideos[bestVideo.videoUrl] ? (
+              <video
+                className="w-64 h-36 rounded-lg object-cover"
+                style={{ backgroundColor: "#fff" }}
+                controls
+                poster={problem.thumbnail}
+                src={uploadedVideos[bestVideo.videoUrl]}
+              />
+            ) : (
+              <video
+                className="w-64 h-36 rounded-lg object-cover"
+                style={{ backgroundColor: "#fff" }}
+                controls
+                poster={bestVideo.videoUrl}
+                src={bestVideo.videoUrl}
+              />
+            )
           ) : (
             <img
               src={problem.thumbnail}
@@ -75,6 +88,9 @@ const ProblemDetail = () => {
               className="w-64 h-36 rounded-lg object-cover"
             />
           )}
+          <div className="text-xs text-gray-500 mt-1">
+            * 새로고침 시 업로드한 영상은 사라집니다.
+          </div>
         </div>
         <form onSubmit={handleAddVideo} className="flex gap-2 mb-8">
           <input
@@ -103,19 +119,21 @@ const ProblemDetail = () => {
               className="mb-8 p-4 border rounded-lg bg-orange-50"
             >
               <div className="flex items-center gap-4 mb-2">
-                <video
-                  className="w-32 h-20 rounded object-cover"
-                  controls
-                  poster={problem.thumbnail}
-                >
-                  <source src={video.videoUrl} type="video/mp4" />
-                  비디오를 재생할 수 없습니다.
-                </video>
+                {uploadedVideos[video.videoUrl] ? (
+                  <video
+                    className="w-32 h-20 rounded object-cover"
+                    style={{ backgroundColor: "#fff" }}
+                    controls
+                    poster={problem.thumbnail}
+                    src={uploadedVideos[video.videoUrl]}
+                  />
+                ) : (
+                  <div className="w-32 h-20 rounded bg-gray-200 flex items-center justify-center text-gray-400">
+                    영상 없음
+                  </div>
+                )}
                 <div className="flex-1">
                   <div className="font-semibold">{video.uploader}</div>
-                  <div className="text-gray-600 text-sm">
-                    파일명: {video.videoUrl.split('/').pop()}
-                  </div>
                   <div className="text-xs text-gray-500 mt-1">
                     등록일: {new Date(video.createdAt).toLocaleString()}
                   </div>

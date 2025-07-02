@@ -25,7 +25,7 @@ const mockVideos: Video[] = [
     id: "v1",
     problemId: "1",
     uploader: "김클라이머",
-    videoUrl: "/Users/taebeom/Downloads/IMG_0660.MOV",
+    videoUrl: "/src/data/assets/IMG_0660.MOV",
     likes: ["이산악", "박등반"],
     comments: [
       {
@@ -47,7 +47,7 @@ const mockVideos: Video[] = [
     id: "v2",
     problemId: "1",
     uploader: "이산악",
-    videoUrl: "/Users/taebeom/Downloads/IMG_0660.MOV",
+    videoUrl: "/src/data/assets/IMG_0660.MOV",
     likes: ["김클라이머"],
     comments: [
       {
@@ -63,7 +63,7 @@ const mockVideos: Video[] = [
     id: "v3",
     problemId: "2",
     uploader: "최등반",
-    videoUrl: "/Users/taebeom/Downloads/IMG_0660.MOV",
+    videoUrl: "/src/data/assets/IMG_0660.MOV",
     likes: ["정클라임", "강산악"],
     comments: [
       {
@@ -79,7 +79,7 @@ const mockVideos: Video[] = [
     id: "v4",
     problemId: "3",
     uploader: "이초보",
-    videoUrl: "/Users/taebeom/Downloads/IMG_0660.MOV",
+    videoUrl: "/src/data/assets/IMG_0660.MOV",
     likes: [],
     comments: [],
     createdAt: new Date().toISOString(),
@@ -104,11 +104,7 @@ export const VideoProvider: React.FC<{ children: React.ReactNode }> = ({
   const getVideos = (problemId: string) =>
     videos.filter((v) => v.problemId === problemId);
 
-  const addVideo = (
-    problemId: string,
-    videoUrl: string,
-    uploader: string
-  ) => {
+  const addVideo = (problemId: string, videoUrl: string, uploader: string) => {
     const newVideo: Video = {
       id: Date.now().toString(),
       problemId,
