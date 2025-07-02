@@ -51,7 +51,7 @@ export interface Problem {
 }
 
 export const mockUserProfiles: { [username: string]: UserProfile } = {
-  "김클라이머": {
+  김클라이머: {
     username: "김클라이머",
     level: "intermediate",
     ageGroup: "30s",
@@ -59,7 +59,7 @@ export const mockUserProfiles: { [username: string]: UserProfile } = {
     climbingStyle: "bouldering",
     techLevel: "V4-V7",
   },
-  "이산악": {
+  이산악: {
     username: "이산악",
     level: "advanced",
     ageGroup: "30s",
@@ -67,7 +67,7 @@ export const mockUserProfiles: { [username: string]: UserProfile } = {
     climbingStyle: "all",
     techLevel: "V8-V11",
   },
-  "박등반": {
+  박등반: {
     username: "박등반",
     level: "beginner",
     ageGroup: "20s",
@@ -75,7 +75,7 @@ export const mockUserProfiles: { [username: string]: UserProfile } = {
     climbingStyle: "bouldering",
     techLevel: "V0-V3",
   },
-  "최등반": {
+  최등반: {
     username: "최등반",
     level: "advanced",
     ageGroup: "40s",
@@ -83,7 +83,7 @@ export const mockUserProfiles: { [username: string]: UserProfile } = {
     climbingStyle: "bouldering",
     techLevel: "V12+",
   },
-  "정클라임": {
+  정클라임: {
     username: "정클라임",
     level: "intermediate",
     ageGroup: "30s",
@@ -91,7 +91,7 @@ export const mockUserProfiles: { [username: string]: UserProfile } = {
     climbingStyle: "lead",
     techLevel: "V4-V7",
   },
-  "강산악": {
+  강산악: {
     username: "강산악",
     level: "advanced",
     ageGroup: "40s",
@@ -99,7 +99,7 @@ export const mockUserProfiles: { [username: string]: UserProfile } = {
     climbingStyle: "all",
     techLevel: "V8-V11",
   },
-  "조바위": {
+  조바위: {
     username: "조바위",
     level: "intermediate",
     ageGroup: "20s",
@@ -107,7 +107,7 @@ export const mockUserProfiles: { [username: string]: UserProfile } = {
     climbingStyle: "bouldering",
     techLevel: "V4-V7",
   },
-  "이초보": {
+  이초보: {
     username: "이초보",
     level: "beginner",
     ageGroup: "20s",
@@ -115,7 +115,7 @@ export const mockUserProfiles: { [username: string]: UserProfile } = {
     climbingStyle: "toprope",
     techLevel: "V0-V3",
   },
-  "김신입": {
+  김신입: {
     username: "김신입",
     level: "beginner",
     ageGroup: "20s",
@@ -139,11 +139,11 @@ export const mockMeetups: Meetup[] = [
     status: "recruiting",
     participants: ["김클라이머", "이산악", "박등반"],
     conditions: {
-      levelRequired: "intermediate",
-      ageGroup: "any",
-      genderPreference: "any",
+      levelRequired: "beginner",
+      ageGroup: "20s",
+      genderPreference: "male",
       climbingStyle: "bouldering",
-      techLevel: "V4-V7",
+      techLevel: "V0-V3",
     },
   },
   {
@@ -159,11 +159,11 @@ export const mockMeetups: Meetup[] = [
     status: "full",
     participants: ["최등반", "정클라임", "강산악", "조바위"],
     conditions: {
-      levelRequired: "advanced",
-      ageGroup: "any",
-      genderPreference: "any",
-      climbingStyle: "bouldering",
-      techLevel: "V8-V11",
+      levelRequired: "intermediate",
+      ageGroup: "30s",
+      genderPreference: "female",
+      climbingStyle: "lead",
+      techLevel: "V4-V7",
     },
   },
   {
@@ -181,10 +181,70 @@ export const mockMeetups: Meetup[] = [
     participants: ["이초보", "김신입"],
     conditions: {
       levelRequired: "beginner",
-      ageGroup: "20s",
-      genderPreference: "any",
+      ageGroup: "any",
+      genderPreference: "mixed",
       climbingStyle: "all",
+      techLevel: "any",
+    },
+  },
+  {
+    id: "4",
+    title: "고수만 모여라! 리드 클라이밍",
+    author: "강산악",
+    date: "2025-01-10",
+    time: "20:00",
+    location: "클라이밍파크 홍대점",
+    currentParticipants: 5,
+    maxParticipants: 8,
+    description: "고급자 리드 클라이밍 세션, 실력자 환영!",
+    status: "recruiting",
+    participants: ["강산악", "최등반"],
+    conditions: {
+      levelRequired: "advanced",
+      ageGroup: "40s",
+      genderPreference: "any",
+      climbingStyle: "lead",
+      techLevel: "V8-V11",
+    },
+  },
+  {
+    id: "5",
+    title: "여성 볼더링 초급 모임",
+    author: "정클라임",
+    date: "2025-01-12",
+    time: "15:00",
+    location: "더클라임 강남점",
+    currentParticipants: 3,
+    maxParticipants: 5,
+    description: "여성 초급자만 모여서 볼더링 연습해요!",
+    status: "recruiting",
+    participants: ["정클라임", "박등반", "김신입"],
+    conditions: {
+      levelRequired: "beginner",
+      ageGroup: "20s",
+      genderPreference: "female",
+      climbingStyle: "bouldering",
       techLevel: "V0-V3",
+    },
+  },
+  {
+    id: "6",
+    title: "탑로프 중급자 모임",
+    author: "조바위",
+    date: "2025-01-15",
+    time: "19:30",
+    location: "더클라임 잠실점",
+    currentParticipants: 4,
+    maxParticipants: 8,
+    description: "탑로프 중급자 이상만!",
+    status: "recruiting",
+    participants: ["조바위", "이초보"],
+    conditions: {
+      levelRequired: "intermediate",
+      ageGroup: "30s",
+      genderPreference: "any",
+      climbingStyle: "toprope",
+      techLevel: "V4-V7",
     },
   },
 ];
