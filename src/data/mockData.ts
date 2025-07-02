@@ -34,9 +34,14 @@ export interface Gym {
   id: string;
   name: string;
   location: string;
+  address: string;
   image: string;
   sections: string[];
   colors: string[];
+  price: string;
+  openHours: string;
+  phone?: string;
+  homepage?: string;
 }
 
 export interface Problem {
@@ -254,28 +259,43 @@ export const mockGyms: Gym[] = [
     id: "1",
     name: "더클라임 강남점",
     location: "서울 강남구",
+    address: "서울특별시 강남구 테헤란로 123",
     image:
       "https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20221025_87%2F1666674763427DfSNN_JPEG%2FCCA27AB7-09DA-40C9-862F-B3EF2FC8441D.jpeg",
     sections: ["A섹션", "B섹션", "C섹션", "D섹션"],
     colors: ["흰색", "노랑", "초록", "파랑", "빨강", "검정"],
+    price: "1일권 20,000원 / 월회원 120,000원",
+    openHours: "평일 10:00~23:00, 주말 10:00~22:00",
+    phone: "02-1234-5678",
+    homepage: "https://theclimb.co.kr/",
   },
   {
     id: "2",
     name: "클라이밍파크 홍대점",
     location: "서울 마포구",
+    address: "서울특별시 마포구 양화로 45",
     image:
-      "https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20241207_78%2F1733574894879Ya4yG_JPEG%2FIMG_20241127_230612_020.jpg",
+      "https://images.unsplash.com/photo-1524230572899-a752b3835840?w=400&h=300&fit=crop",
     sections: ["1구역", "2구역", "3구역"],
     colors: ["흰색", "노랑", "초록", "파랑", "빨강", "보라"],
+    price: "1일권 18,000원 / 월회원 110,000원",
+    openHours: "평일 11:00~22:00, 주말 11:00~21:00",
+    phone: "02-2345-6789",
+    homepage: "https://climbingpark.co.kr/",
   },
   {
     id: "3",
     name: "더클라임 잠실점",
     location: "서울 송파구",
+    address: "서울특별시 송파구 올림픽로 240",
     image:
-      "https://search.pstatic.net/common/?src=https%3A%2F%2Fpup-review-phinf.pstatic.net%2FMjAyNTA2MjJfMjYx%2FMDAxNzUwNTk0MDc5NDAz.dZBzuyWC0MQvAbZVQ0ETPKaVLlf69peILD6kaDABfosg.YzFjmHzkQiscO1oPb9sEPYP64jj3h0RWuVRzLsKr3Xwg.JPEG%2FIMG_6883.jpeg%3Ftype%3Dw1500_60_sharpen",
+      "https://images.unsplash.com/photo-1472396961693-142e6e269027?w=400&h=300&fit=crop",
     sections: ["East", "West", "Center"],
     colors: ["흰색", "노랑", "초록", "파랑", "빨강", "오렌지"],
+    price: "1일권 19,000원 / 월회원 115,000원",
+    openHours: "평일 10:00~23:00, 주말 10:00~22:00",
+    phone: "02-3456-7890",
+    homepage: "https://theclimb.co.kr/",
   },
 ];
 

@@ -1,6 +1,13 @@
 import React, { useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { ArrowLeft, MapPin } from "lucide-react";
+import {
+  ArrowLeft,
+  MapPin,
+  Clock,
+  Phone,
+  Globe,
+  CreditCard,
+} from "lucide-react";
 import Header from "@/components/Header";
 import { mockGyms, mockProblems } from "@/data/mockData";
 import { useVideoContext } from "@/context/VideoContext";
@@ -40,7 +47,6 @@ const GymDetail = () => {
     );
   });
 
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 to-red-50">
       <Header />
@@ -56,19 +62,58 @@ const GymDetail = () => {
 
         {/* 암장 헤더 */}
         <div className="bg-white rounded-2xl shadow-lg p-6 mb-8">
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-6">
             <img
               src={gym.image}
               alt={gym.name}
-              className="w-24 h-24 object-cover rounded-xl"
+              className="w-24 h-24 object-cover rounded-xl border border-orange-200 shadow-sm"
             />
-            <div>
-              <h1 className="text-3xl font-bold text-gray-800 mb-2">
+            <div className="flex-1">
+              <h1 className="text-3xl font-bold text-gray-800 mb-3">
                 {gym.name}
               </h1>
-              <div className="flex items-center space-x-1 text-gray-600">
-                <MapPin className="w-4 h-4" />
-                <span>{gym.location}</span>
+              <div className="space-y-2">
+                <div className="flex items-center text-gray-700 text-sm">
+                  <MapPin className="w-4 h-4 mr-2 text-orange-500" />
+                  <span className="font-semibold mr-1">위치:</span>{" "}
+                  {gym.location}
+                </div>
+                <div className="flex items-center text-gray-700 text-sm">
+                  <span className="w-4 h-4 mr-2" />
+                  <span className="font-semibold mr-1">주소:</span>{" "}
+                  {gym.address}
+                </div>
+                <div className="flex items-center text-gray-700 text-sm">
+                  <CreditCard className="w-4 h-4 mr-2 text-orange-500" />
+                  <span className="font-semibold mr-1">이용 요금:</span>{" "}
+                  {gym.price}
+                </div>
+                <div className="flex items-center text-gray-700 text-sm">
+                  <Clock className="w-4 h-4 mr-2 text-orange-500" />
+                  <span className="font-semibold mr-1">이용 시간:</span>{" "}
+                  {gym.openHours}
+                </div>
+                {gym.phone && (
+                  <div className="flex items-center text-gray-700 text-sm">
+                    <Phone className="w-4 h-4 mr-2 text-orange-500" />
+                    <span className="font-semibold mr-1">전화:</span>{" "}
+                    {gym.phone}
+                  </div>
+                )}
+                {gym.homepage && (
+                  <div className="flex items-center text-gray-700 text-sm">
+                    <Globe className="w-4 h-4 mr-2 text-orange-500" />
+                    <span className="font-semibold mr-1">홈페이지:</span>
+                    <a
+                      href={gym.homepage}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-600 underline ml-1"
+                    >
+                      {gym.homepage}
+                    </a>
+                  </div>
+                )}
               </div>
             </div>
           </div>
