@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import {
   ArrowLeft,
@@ -19,6 +19,33 @@ const GymDetail = () => {
   const [selectedColor, setSelectedColor] = useState("");
   const [selectedProblem, setSelectedProblem] = useState<any>(null);
   const { getVideos } = useVideoContext();
+  const [reserveDate, setReserveDate] = useState("");
+  const [reserveTime, setReserveTime] = useState("");
+  const [reserveCount, setReserveCount] = useState(1);
+  const [reservations, setReservations] = useState<any[]>([]);
+
+  useEffect(() => {
+    const stored = localStorage.getItem(`gym-reservations-${id}`);
+    if (stored) setReservations(JSON.parse(stored));
+  }, [id]);
+
+  const handleReserve = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!reserveDate || !reserveTime || reserveCount < 1) return;
+    const newReserve = {
+      date: reserveDate,
+      time: reserveTime,
+      count: reserveCount,
+      createdAt: new Date().toISOString(),
+    };
+    const next = [newReserve, ...reservations];
+    setReservations(next);
+    localStorage.setItem(`gym-reservations-${id}`, JSON.stringify(next));
+    setReserveDate("");
+    setReserveTime("");
+    setReserveCount(1);
+    alert("예약이 완료되었습니다!");
+  };
 
   if (!gym) {
     return (
@@ -185,6 +212,86 @@ const GymDetail = () => {
                 ))}
               </div>
             </div>
+          </div>
+        </div>
+
+        {/* 암장 헤더 아래에 예약 폼 추가 */}
+        <div className="bg-white rounded-2xl shadow-lg p-6 mb-8">
+          <h2 className="text-xl font-bold text-gray-800 mb-4">
+            매장 예약하기
+          </h2>
+          <form
+            onSubmit={handleReserve}
+            className="flex flex-col md:flex-row md:items-end gap-4 mb-4"
+          >
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                날짜
+              </label>
+              <input
+                type="date"
+                value={reserveDate}
+                onChange={(e) => setReserveDate(e.target.value)}
+                className="px-3 py-2 border border-gray-300 rounded-lg text-sm"
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                시간
+              </label>
+              <input
+                type="time"
+                value={reserveTime}
+                onChange={(e) => setReserveTime(e.target.value)}
+                className="px-3 py-2 border border-gray-300 rounded-lg text-sm"
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                인원
+              </label>
+              <input
+                type="number"
+                min={1}
+                value={reserveCount}
+                onChange={(e) => setReserveCount(Number(e.target.value))}
+                className="px-3 py-2 border border-gray-300 rounded-lg text-sm w-24"
+                required
+              />
+            </div>
+            <button
+              type="submit"
+              className="px-6 py-2 bg-gradient-to-r from-orange-500 to-red-500 text-white rounded-lg font-semibold hover:from-orange-600 hover:to-red-600 transition-all"
+            >
+              예약하기
+            </button>
+          </form>
+          <div>
+            <h3 className="text-lg font-semibold mb-2">예약 내역</h3>
+            {reservations.length === 0 ? (
+              <div className="text-gray-500 text-sm">
+                아직 예약 내역이 없습니다.
+              </div>
+            ) : (
+              <ul className="space-y-2">
+                {reservations.map((r, i) => (
+                  <li
+                    key={i}
+                    className="bg-orange-50 rounded p-3 flex items-center gap-4 text-sm"
+                  >
+                    <span className="font-semibold">
+                      {r.date} {r.time}
+                    </span>
+                    <span>인원: {r.count}명</span>
+                    <span className="ml-auto text-gray-400">
+                      {new Date(r.createdAt).toLocaleString()}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
         </div>
 
