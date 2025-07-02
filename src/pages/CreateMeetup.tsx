@@ -26,7 +26,6 @@ const CreateMeetup = () => {
     ageGroup: "any",
     genderPreference: "any",
     climbingStyle: "all",
-    techLevel: "any",
   });
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -200,17 +199,28 @@ const CreateMeetup = () => {
             </div>
 
             <div className="mb-6">
-              <h3 className="text-lg font-semibold mb-4 text-gray-800">참가 조건 설정</h3>
-              
+              <h3 className="text-lg font-semibold mb-4 text-gray-800">
+                참가 조건 설정
+              </h3>
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     레벨 조건
+                    <span className="text-xs text-gray-500 ml-1">
+                      (전체적인 클라이밍 경력)
+                    </span>
                   </label>
                   <select
                     value={conditions.levelRequired}
-                    onChange={(e) => setConditions(prev => ({ ...prev, levelRequired: e.target.value as any }))}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg"
+                    onChange={(e) =>
+                      setConditions((prev) => ({
+                        ...prev,
+                        levelRequired: e.target.value as any,
+                      }))
+                    }
+                    className={`w-full px-3 py-2 border border-gray-300 rounded-lg ${
+                      conditions.levelRequired === "any" ? "text-gray-400" : ""
+                    }`}
                   >
                     <option value="any">제한없음</option>
                     <option value="beginner">초급자</option>
@@ -218,15 +228,21 @@ const CreateMeetup = () => {
                     <option value="advanced">고급자</option>
                   </select>
                 </div>
-
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     연령대
                   </label>
                   <select
                     value={conditions.ageGroup}
-                    onChange={(e) => setConditions(prev => ({ ...prev, ageGroup: e.target.value as any }))}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg"
+                    onChange={(e) =>
+                      setConditions((prev) => ({
+                        ...prev,
+                        ageGroup: e.target.value as any,
+                      }))
+                    }
+                    className={`w-full px-3 py-2 border border-gray-300 rounded-lg ${
+                      conditions.ageGroup === "any" ? "text-gray-400" : ""
+                    }`}
                   >
                     <option value="any">제한없음</option>
                     <option value="20s">20대</option>
@@ -235,53 +251,50 @@ const CreateMeetup = () => {
                     <option value="50s+">50대 이상</option>
                   </select>
                 </div>
-
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
-                    성별 선호
+                    성별
                   </label>
                   <select
                     value={conditions.genderPreference}
-                    onChange={(e) => setConditions(prev => ({ ...prev, genderPreference: e.target.value as any }))}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg"
+                    onChange={(e) =>
+                      setConditions((prev) => ({
+                        ...prev,
+                        genderPreference: e.target.value as any,
+                      }))
+                    }
+                    className={`w-full px-3 py-2 border border-gray-300 rounded-lg ${
+                      conditions.genderPreference === "any"
+                        ? "text-gray-400"
+                        : ""
+                    }`}
                   >
                     <option value="any">제한없음</option>
+                    <option value="male">남자</option>
+                    <option value="female">여자</option>
                     <option value="mixed">남녀무관</option>
-                    <option value="male">남성만</option>
-                    <option value="female">여성만</option>
                   </select>
                 </div>
-
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     클라이밍 스타일
                   </label>
                   <select
                     value={conditions.climbingStyle}
-                    onChange={(e) => setConditions(prev => ({ ...prev, climbingStyle: e.target.value as any }))}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg"
+                    onChange={(e) =>
+                      setConditions((prev) => ({
+                        ...prev,
+                        climbingStyle: e.target.value as any,
+                      }))
+                    }
+                    className={`w-full px-3 py-2 border border-gray-300 rounded-lg ${
+                      conditions.climbingStyle === "all" ? "text-gray-400" : ""
+                    }`}
                   >
                     <option value="all">전체</option>
                     <option value="bouldering">볼더링</option>
-                    <option value="lead">리드클라이밍</option>
+                    <option value="lead">리드</option>
                     <option value="toprope">탑로프</option>
-                  </select>
-                </div>
-
-                <div className="md:col-span-2">
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    기술 레벨
-                  </label>
-                  <select
-                    value={conditions.techLevel}
-                    onChange={(e) => setConditions(prev => ({ ...prev, techLevel: e.target.value as any }))}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg"
-                  >
-                    <option value="any">제한없음</option>
-                    <option value="V0-V3">V0-V3 (초급)</option>
-                    <option value="V4-V7">V4-V7 (중급)</option>
-                    <option value="V8-V11">V8-V11 (고급)</option>
-                    <option value="V12+">V12+ (전문가)</option>
                   </select>
                 </div>
               </div>

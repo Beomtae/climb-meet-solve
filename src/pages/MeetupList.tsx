@@ -24,67 +24,87 @@ const MeetupList = () => {
     // 내 프로필과 모임 조건이 맞는지 확인
     if (userProfile) {
       const { conditions } = meetup;
-      
+
       // 레벨 조건 체크
       if (conditions.levelRequired && conditions.levelRequired !== "any") {
         const levelOrder = { beginner: 0, intermediate: 1, advanced: 2 };
-        if (levelOrder[userProfile.level] < levelOrder[conditions.levelRequired]) {
+        if (
+          levelOrder[userProfile.level] < levelOrder[conditions.levelRequired]
+        ) {
           return false;
         }
       }
 
       // 연령대 조건 체크
-      if (conditions.ageGroup && conditions.ageGroup !== "any" && 
-          userProfile.ageGroup !== conditions.ageGroup) {
+      if (
+        conditions.ageGroup &&
+        conditions.ageGroup !== "any" &&
+        userProfile.ageGroup !== conditions.ageGroup
+      ) {
         return false;
       }
 
       // 성별 선호 체크
-      if (conditions.genderPreference && conditions.genderPreference !== "any" && 
-          conditions.genderPreference !== "mixed" && 
-          userProfile.gender !== conditions.genderPreference) {
+      if (
+        conditions.genderPreference &&
+        conditions.genderPreference !== "any" &&
+        conditions.genderPreference !== "mixed" &&
+        userProfile.gender !== conditions.genderPreference
+      ) {
         return false;
       }
 
       // 클라이밍 스타일 체크
-      if (conditions.climbingStyle && conditions.climbingStyle !== "all" && 
-          userProfile.climbingStyle !== "all" && 
-          userProfile.climbingStyle !== conditions.climbingStyle) {
+      if (
+        conditions.climbingStyle &&
+        conditions.climbingStyle !== "all" &&
+        userProfile.climbingStyle !== "all" &&
+        userProfile.climbingStyle !== conditions.climbingStyle
+      ) {
         return false;
       }
 
       // 기술 레벨 체크
       if (conditions.techLevel && conditions.techLevel !== "any") {
         const techOrder = { "V0-V3": 0, "V4-V7": 1, "V8-V11": 2, "V12+": 3 };
-        if (techOrder[userProfile.techLevel] < techOrder[conditions.techLevel]) {
+        if (
+          techOrder[userProfile.techLevel] < techOrder[conditions.techLevel]
+        ) {
           return false;
         }
       }
     }
 
     // 사용자가 설정한 필터 적용
-    if (filters.levelRequired !== "any" && 
-        (!meetup.conditions?.levelRequired || meetup.conditions.levelRequired !== filters.levelRequired)) {
+    if (
+      filters.levelRequired !== "any" &&
+      (!meetup.conditions?.levelRequired ||
+        meetup.conditions.levelRequired !== filters.levelRequired)
+    ) {
       return false;
     }
 
-    if (filters.ageGroup !== "any" && 
-        (!meetup.conditions?.ageGroup || meetup.conditions.ageGroup !== filters.ageGroup)) {
+    if (
+      filters.ageGroup !== "any" &&
+      (!meetup.conditions?.ageGroup ||
+        meetup.conditions.ageGroup !== filters.ageGroup)
+    ) {
       return false;
     }
 
-    if (filters.genderPreference !== "any" && 
-        (!meetup.conditions?.genderPreference || meetup.conditions.genderPreference !== filters.genderPreference)) {
+    if (
+      filters.genderPreference !== "any" &&
+      (!meetup.conditions?.genderPreference ||
+        meetup.conditions.genderPreference !== filters.genderPreference)
+    ) {
       return false;
     }
 
-    if (filters.climbingStyle !== "all" && 
-        (!meetup.conditions?.climbingStyle || meetup.conditions.climbingStyle !== filters.climbingStyle)) {
-      return false;
-    }
-
-    if (filters.techLevel !== "any" && 
-        (!meetup.conditions?.techLevel || meetup.conditions.techLevel !== filters.techLevel)) {
+    if (
+      filters.climbingStyle !== "all" &&
+      (!meetup.conditions?.climbingStyle ||
+        meetup.conditions.climbingStyle !== filters.climbingStyle)
+    ) {
       return false;
     }
 
@@ -93,38 +113,55 @@ const MeetupList = () => {
 
   const getLevelText = (level: string) => {
     switch (level) {
-      case "beginner": return "초급자";
-      case "intermediate": return "중급자";
-      case "advanced": return "고급자";
-      default: return "제한없음";
+      case "beginner":
+        return "초급자";
+      case "intermediate":
+        return "중급자";
+      case "advanced":
+        return "고급자";
+      default:
+        return "제한없음";
     }
   };
 
   const getAgeGroupText = (ageGroup: string) => {
     switch (ageGroup) {
-      case "20s": return "20대";
-      case "30s": return "30대";
-      case "40s": return "40대";
-      case "50s+": return "50대+";
-      default: return "제한없음";
+      case "20s":
+        return "20대";
+      case "30s":
+        return "30대";
+      case "40s":
+        return "40대";
+      case "50s+":
+        return "50대+";
+      default:
+        return "제한없음";
     }
   };
 
   const getGenderText = (gender: string) => {
     switch (gender) {
-      case "male": return "남성만";
-      case "female": return "여성만";
-      case "mixed": return "남녀무관";
-      default: return "제한없음";
+      case "male":
+        return "남성만";
+      case "female":
+        return "여성만";
+      case "mixed":
+        return "남녀무관";
+      default:
+        return "제한없음";
     }
   };
 
   const getClimbingStyleText = (style: string) => {
     switch (style) {
-      case "bouldering": return "볼더링";
-      case "lead": return "리드";
-      case "toprope": return "탑로프";
-      default: return "전체";
+      case "bouldering":
+        return "볼더링";
+      case "lead":
+        return "리드";
+      case "toprope":
+        return "탑로프";
+      default:
+        return "전체";
     }
   };
 
@@ -160,13 +197,25 @@ const MeetupList = () => {
 
         {showFilters && (
           <div className="bg-white rounded-2xl shadow-lg p-6 mb-6 border border-orange-100">
-            <h3 className="text-lg font-semibold mb-4 text-gray-800">모임 필터</h3>
+            <h3 className="text-lg font-semibold mb-4 text-gray-800">
+              모임 필터
+            </h3>
             <div className="grid md:grid-cols-3 lg:grid-cols-5 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">레벨</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  레벨
+                  <span className="text-xs text-gray-500 ml-1">
+                    (전체적인 클라이밍 경력)
+                  </span>
+                </label>
                 <select
                   value={filters.levelRequired}
-                  onChange={(e) => setFilters(prev => ({ ...prev, levelRequired: e.target.value }))}
+                  onChange={(e) =>
+                    setFilters((prev) => ({
+                      ...prev,
+                      levelRequired: e.target.value,
+                    }))
+                  }
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm"
                 >
                   <option value="any">전체</option>
@@ -176,10 +225,17 @@ const MeetupList = () => {
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">연령대</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  연령대
+                </label>
                 <select
                   value={filters.ageGroup}
-                  onChange={(e) => setFilters(prev => ({ ...prev, ageGroup: e.target.value }))}
+                  onChange={(e) =>
+                    setFilters((prev) => ({
+                      ...prev,
+                      ageGroup: e.target.value,
+                    }))
+                  }
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm"
                 >
                   <option value="any">전체</option>
@@ -190,10 +246,17 @@ const MeetupList = () => {
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">성별</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  성별
+                </label>
                 <select
                   value={filters.genderPreference}
-                  onChange={(e) => setFilters(prev => ({ ...prev, genderPreference: e.target.value }))}
+                  onChange={(e) =>
+                    setFilters((prev) => ({
+                      ...prev,
+                      genderPreference: e.target.value,
+                    }))
+                  }
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm"
                 >
                   <option value="any">전체</option>
@@ -203,30 +266,23 @@ const MeetupList = () => {
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">스타일</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  스타일
+                </label>
                 <select
                   value={filters.climbingStyle}
-                  onChange={(e) => setFilters(prev => ({ ...prev, climbingStyle: e.target.value }))}
+                  onChange={(e) =>
+                    setFilters((prev) => ({
+                      ...prev,
+                      climbingStyle: e.target.value,
+                    }))
+                  }
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm"
                 >
                   <option value="all">전체</option>
                   <option value="bouldering">볼더링</option>
                   <option value="lead">리드</option>
                   <option value="toprope">탑로프</option>
-                </select>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">기술레벨</label>
-                <select
-                  value={filters.techLevel}
-                  onChange={(e) => setFilters(prev => ({ ...prev, techLevel: e.target.value }))}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm"
-                >
-                  <option value="any">전체</option>
-                  <option value="V0-V3">V0-V3</option>
-                  <option value="V4-V7">V4-V7</option>
-                  <option value="V8-V11">V8-V11</option>
-                  <option value="V12+">V12+</option>
                 </select>
               </div>
             </div>
@@ -256,34 +312,35 @@ const MeetupList = () => {
                     </span>
                   </div>
                   <p className="text-gray-600 mb-4">{meetup.description}</p>
-                  
+
                   {meetup.conditions && (
                     <div className="flex flex-wrap gap-2 mb-4">
-                      {meetup.conditions.levelRequired && meetup.conditions.levelRequired !== "any" && (
-                        <span className="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">
-                          {getLevelText(meetup.conditions.levelRequired)}
-                        </span>
-                      )}
-                      {meetup.conditions.ageGroup && meetup.conditions.ageGroup !== "any" && (
-                        <span className="px-2 py-1 bg-purple-100 text-purple-800 text-xs rounded-full">
-                          {getAgeGroupText(meetup.conditions.ageGroup)}
-                        </span>
-                      )}
-                      {meetup.conditions.genderPreference && meetup.conditions.genderPreference !== "any" && (
-                        <span className="px-2 py-1 bg-pink-100 text-pink-800 text-xs rounded-full">
-                          {getGenderText(meetup.conditions.genderPreference)}
-                        </span>
-                      )}
-                      {meetup.conditions.climbingStyle && meetup.conditions.climbingStyle !== "all" && (
-                        <span className="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full">
-                          {getClimbingStyleText(meetup.conditions.climbingStyle)}
-                        </span>
-                      )}
-                      {meetup.conditions.techLevel && meetup.conditions.techLevel !== "any" && (
-                        <span className="px-2 py-1 bg-yellow-100 text-yellow-800 text-xs rounded-full">
-                          {meetup.conditions.techLevel}
-                        </span>
-                      )}
+                      {meetup.conditions.levelRequired &&
+                        meetup.conditions.levelRequired !== "any" && (
+                          <span className="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">
+                            {getLevelText(meetup.conditions.levelRequired)}
+                          </span>
+                        )}
+                      {meetup.conditions.ageGroup &&
+                        meetup.conditions.ageGroup !== "any" && (
+                          <span className="px-2 py-1 bg-purple-100 text-purple-800 text-xs rounded-full">
+                            {getAgeGroupText(meetup.conditions.ageGroup)}
+                          </span>
+                        )}
+                      {meetup.conditions.genderPreference &&
+                        meetup.conditions.genderPreference !== "any" && (
+                          <span className="px-2 py-1 bg-pink-100 text-pink-800 text-xs rounded-full">
+                            {getGenderText(meetup.conditions.genderPreference)}
+                          </span>
+                        )}
+                      {meetup.conditions.climbingStyle &&
+                        meetup.conditions.climbingStyle !== "all" && (
+                          <span className="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full">
+                            {getClimbingStyleText(
+                              meetup.conditions.climbingStyle
+                            )}
+                          </span>
+                        )}
                     </div>
                   )}
                 </div>
