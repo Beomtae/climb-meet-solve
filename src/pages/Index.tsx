@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Users, Mountain } from 'lucide-react';
+import { Users, Mountain, MessageSquare, ShoppingBag } from 'lucide-react';
 import Header from '@/components/Header';
 import ClimbingIcon from '@/components/ClimbingIcon';
 
@@ -25,7 +25,7 @@ const Index = () => {
         </div>
 
         {/* Main Action Cards */}
-        <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+        <div className="grid md:grid-cols-2 gap-6 max-w-6xl mx-auto">
           {/* 클라이밍 모임 카드 */}
           <Link to="/meetups" className="group">
             <div className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-8 border border-orange-100 group-hover:border-orange-300">
@@ -54,6 +54,38 @@ const Index = () => {
               </p>
               <div className="flex items-center text-orange-600 font-semibold group-hover:translate-x-2 transition-transform duration-300">
                 암장 둘러보기 →
+              </div>
+            </div>
+          </Link>
+
+          {/* 게시판 카드 */}
+          <Link to="/board" className="group">
+            <div className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-8 border border-orange-100 group-hover:border-orange-300">
+              <div className="flex items-center justify-center w-16 h-16 bg-gradient-to-r from-orange-500 to-red-500 rounded-xl mb-6 group-hover:scale-110 transition-transform duration-300">
+                <MessageSquare className="w-8 h-8 text-white" />
+              </div>
+              <h2 className="text-2xl font-bold text-gray-800 mb-3">클라이밍 게시판</h2>
+              <p className="text-gray-600 mb-4">
+                클라이머들과 자유롭게 소통하고 정보를 공유하세요. 질문, 팁, 경험담을 나눠보세요.
+              </p>
+              <div className="flex items-center text-orange-600 font-semibold group-hover:translate-x-2 transition-transform duration-300">
+                게시판 보기 →
+              </div>
+            </div>
+          </Link>
+
+          {/* 중고거래 카드 */}
+          <Link to="/marketplace" className="group">
+            <div className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-8 border border-orange-100 group-hover:border-orange-300">
+              <div className="flex items-center justify-center w-16 h-16 bg-gradient-to-r from-orange-500 to-red-500 rounded-xl mb-6 group-hover:scale-110 transition-transform duration-300">
+                <ShoppingBag className="w-8 h-8 text-white" />
+              </div>
+              <h2 className="text-2xl font-bold text-gray-800 mb-3">중고거래</h2>
+              <p className="text-gray-600 mb-4">
+                믿을 수 있는 클라이머들과 안전하게 클라이밍 용품을 거래해보세요.
+              </p>
+              <div className="flex items-center text-orange-600 font-semibold group-hover:translate-x-2 transition-transform duration-300">
+                중고거래 보기 →
               </div>
             </div>
           </Link>

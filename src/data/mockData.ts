@@ -334,3 +334,194 @@ export const mockProblems: Problem[] = [
     description: "정확한 풋워크와 밸런스가 중요한 슬랩 문제입니다.",
   },
 ];
+
+// 영상 컨텍스트용 Mock 데이터
+export const videoSolutions = [
+  {
+    id: "1",
+    problemId: "prob_1",
+    title: "빨간색 V3 문제 풀이",
+    description: "왼쪽 벽 빨간색 홀드 사용한 V3 난이도 문제입니다.",
+    videoPath: "/Users/taebeom/Downloads/IMG_0660.MOV",
+    thumbnailUrl: "https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?w=300&h=200&fit=crop",
+    uploadedBy: "김민수",
+    uploadedAt: "2024-01-15",
+    likes: 24,
+    views: 156
+  },
+  {
+    id: "2", 
+    problemId: "prob_2",
+    title: "파란색 V5 동적 무브",
+    description: "파란색 홀드로 이루어진 V5 문제의 핵심 동적 무브 해설",
+    videoPath: "/Users/taebeom/Downloads/IMG_0660.MOV",
+    thumbnailUrl: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=300&h=200&fit=crop",
+    uploadedBy: "박지영",
+    uploadedAt: "2024-01-14",
+    likes: 31,
+    views: 203
+  }
+];
+
+// 게시판 Mock 데이터
+export interface BoardPost {
+  id: string;
+  title: string;
+  content: string;
+  author: string;
+  category: string;
+  createdAt: string;
+  views: number;
+  comments: number;
+  likes?: number;
+  isHot?: boolean;
+}
+
+export const boardPosts: BoardPost[] = [
+  {
+    id: "board_1",
+    title: "클라이밍 초보인데 첫 암장 추천 좀 해주세요!",
+    content: "안녕하세요! 클라이밍에 입문하려고 하는데 어떤 암장이 초보자에게 좋을까요? 강남 근처로 추천 부탁드립니다.",
+    author: "클라이밍뉴비",
+    category: "질문",
+    createdAt: "2024-01-15",
+    views: 127,
+    comments: 8,
+    likes: 12,
+    isHot: true
+  },
+  {
+    id: "board_2",
+    title: "오늘 처음으로 V4 완등했어요! 🎉",
+    content: "6개월 동안 도전했던 V4 문제를 드디어 완등했습니다! 너무 기뻐서 자랑하러 왔어요 ㅎㅎ 다들 화이팅!",
+    author: "산악인123",
+    category: "잡담",
+    createdAt: "2024-01-14",
+    views: 89,
+    comments: 15,
+    likes: 24
+  },
+  {
+    id: "board_3",
+    title: "클라이밍 신발 사이즈 고민",
+    content: "평소 신발 사이즈보다 얼마나 작게 사야 하나요? 0.5 작게? 1 작게? 경험담 공유 부탁드려요.",
+    author: "홀드마스터",
+    category: "질문",
+    createdAt: "2024-01-13",
+    views: 156,
+    comments: 12,
+    likes: 8
+  },
+  {
+    id: "board_4",
+    title: "이번 주말 북한산 암벽등반 하실 분?",
+    content: "이번 주 토요일 북한산 인수봉에서 암벽등반 하실 분 구해요! 5.7-5.10a 수준으로 생각하고 있습니다.",
+    author: "록클라이머",
+    category: "정보공유",
+    createdAt: "2024-01-12",
+    views: 203,
+    comments: 6,
+    likes: 18,
+    isHot: true
+  }
+];
+
+export interface BoardComment {
+  id: string;
+  postId: string;
+  author: string;
+  content: string;
+  createdAt: string;
+}
+
+export const boardComments: BoardComment[] = [
+  {
+    id: "comment_1",
+    postId: "board_1",
+    author: "클라이밍선배",
+    content: "강남이면 클라이밍파크나 더클라임 추천드려요! 초보자 코스도 잘 되어 있고 강사분들도 친절하시더라구요.",
+    createdAt: "2024-01-15"
+  },
+  {
+    id: "comment_2",
+    postId: "board_1",
+    author: "암벽소녀",
+    content: "저도 더클라임 추천! 시설도 깔끔하고 초보자 프로그램도 잘 되어 있어요.",
+    createdAt: "2024-01-15"
+  }
+];
+
+// 중고거래 Mock 데이터
+export interface MarketplaceItem {
+  id: string;
+  title: string;
+  description: string;
+  price: number;
+  category: string;
+  seller: string;
+  location: string;
+  status: '판매중' | '예약중' | '판매완료';
+  image: string;
+  createdAt: string;
+  views?: number;
+  likes: number;
+}
+
+export const marketplaceItems: MarketplaceItem[] = [
+  {
+    id: "market_1",
+    title: "스카르파 벨로체 클라이밍화 (245mm)",
+    description: "6개월 정도 사용한 스카르파 벨로체입니다. 사이즈가 안 맞아서 판매해요. 상태 양호하고 아직 많이 남았어요!",
+    price: 120000,
+    category: "신발",
+    seller: "클라이머김",
+    location: "서울 강남구",
+    status: "판매중",
+    image: "https://images.unsplash.com/photo-1544966503-7cc5ac882d5e?w=300&h=200&fit=crop",
+    createdAt: "2024-01-15",
+    views: 45,
+    likes: 7
+  },
+  {
+    id: "market_2",
+    title: "페츨 하네스 + 카라비너 세트",
+    description: "페츨 하네스와 카라비너 5개 세트로 판매합니다. 실내 클라이밍용으로 구매했는데 야외로 넘어가면서 판매해요.",
+    price: 85000,
+    category: "하네스",
+    seller: "암벽왕자",
+    location: "서울 마포구",
+    status: "판매중",
+    image: "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=300&h=200&fit=crop",
+    createdAt: "2024-01-14",
+    views: 32,
+    likes: 12
+  },
+  {
+    id: "market_3",
+    title: "마무트 다이나믹 로프 60m",
+    description: "마무트 브랜드 다이나믹 로프 60m입니다. 야외 클라이밍 10회 정도 사용했고 상태 매우 좋습니다.",
+    price: 180000,
+    category: "로프",
+    seller: "산악인",
+    location: "서울 송파구",
+    status: "예약중",
+    image: "https://images.unsplash.com/photo-1549057446-9f5c6ac91a04?w=300&h=200&fit=crop",
+    createdAt: "2024-01-13",
+    views: 67,
+    likes: 15
+  },
+  {
+    id: "market_4",
+    title: "라 스포르티바 파이썬 (250mm)",
+    description: "라 스포르티바 파이썬 클라이밍화입니다. 1년 정도 사용했지만 관리 잘해서 상태 좋아요. 발볼 넓으신 분께 추천!",
+    price: 140000,
+    category: "신발",
+    seller: "볼더러",
+    location: "경기 성남시",
+    status: "판매완료",
+    image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=300&h=200&fit=crop",
+    createdAt: "2024-01-12",
+    views: 89,
+    likes: 23
+  }
+];

@@ -18,6 +18,10 @@ import Signup from "./pages/Signup";
 import Logout from "./pages/Logout";
 import { VideoProvider } from "./context/VideoContext";
 import ProblemDetail from "./pages/ProblemDetail";
+import BoardList from "./pages/BoardList";
+import BoardDetail from "./pages/BoardDetail";
+import MarketplaceList from "./pages/MarketplaceList";
+import MarketplaceDetail from "./pages/MarketplaceDetail";
 
 const queryClient = new QueryClient();
 
@@ -42,6 +46,10 @@ const App = () => (
                   <Route path="/gyms" element={<GymList />} />
                   <Route path="/gyms/:id" element={<GymDetail />} />
                   <Route path="/problems/:id" element={<ProblemDetail />} />
+                  <Route path="/board" element={<BoardList />} />
+                  <Route path="/board/:id" element={<BoardDetail />} />
+                  <Route path="/marketplace" element={<MarketplaceList />} />
+                  <Route path="/marketplace/:id" element={<MarketplaceDetail />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </BrowserRouter>
