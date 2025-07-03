@@ -12,17 +12,27 @@ import Header from "@/components/Header";
 import { mockGyms, mockProblems } from "@/data/mockData";
 import { useVideoContext } from "@/context/VideoContext";
 
+// Reservation 타입 정의
+interface Reservation {
+  date: string;
+  time: string;
+  count: number;
+  createdAt: string;
+}
+
 const GymDetail = () => {
   const { id } = useParams();
   const gym = mockGyms.find((g) => g.id === id);
   const [selectedSection, setSelectedSection] = useState("");
   const [selectedColor, setSelectedColor] = useState("");
-  const [selectedProblem, setSelectedProblem] = useState<any>(null);
+  const [selectedProblem, setSelectedProblem] = useState<
+    import("@/data/mockData").Problem | null
+  >(null);
   const { getVideos } = useVideoContext();
   const [reserveDate, setReserveDate] = useState("");
   const [reserveTime, setReserveTime] = useState("");
   const [reserveCount, setReserveCount] = useState(1);
-  const [reservations, setReservations] = useState<any[]>([]);
+  const [reservations, setReservations] = useState<Reservation[]>([]);
 
   useEffect(() => {
     const stored = localStorage.getItem(`gym-reservations-${id}`);
@@ -99,6 +109,31 @@ const GymDetail = () => {
               <h1 className="text-3xl font-bold text-gray-800 mb-3">
                 {gym.name}
               </h1>
+              <div className="flex items-center gap-3 mb-2">
+                {gym.congestion && (
+                  <span
+                    className={`px-3 py-1 rounded-full text-xs font-semibold
+                      ${
+                        gym.congestion === "여유"
+                          ? "bg-green-100 text-green-800"
+                          : ""
+                      }
+                      ${
+                        gym.congestion === "보통"
+                          ? "bg-orange-100 text-orange-800"
+                          : ""
+                      }
+                      ${
+                        gym.congestion === "혼잡"
+                          ? "bg-red-100 text-red-800"
+                          : ""
+                      }
+                    `}
+                  >
+                    현재 혼잡도: {gym.congestion}
+                  </span>
+                )}
+              </div>
               <div className="space-y-2">
                 <div className="flex items-center text-gray-700 text-sm">
                   <MapPin className="w-4 h-4 mr-2 text-orange-500" />
