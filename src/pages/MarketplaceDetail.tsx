@@ -6,11 +6,13 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useUserContext } from '@/context/UserContext';
+import { useToast } from '@/hooks/use-toast';
 import { marketplaceItems } from '@/data/mockData';
 
 const MarketplaceDetail = () => {
   const { id } = useParams();
-  const { user } = useUserContext();
+  const { user, likedItems, toggleLike } = useUserContext();
+  const { toast } = useToast();
   const [isLiked, setIsLiked] = useState(false);
   
   const item = marketplaceItems.find(i => i.id === id);

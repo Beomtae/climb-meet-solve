@@ -20,8 +20,11 @@ import { VideoProvider } from "./context/VideoContext";
 import ProblemDetail from "./pages/ProblemDetail";
 import BoardList from "./pages/BoardList";
 import BoardDetail from "./pages/BoardDetail";
+import BoardCreate from "./pages/BoardCreate";
 import MarketplaceList from "./pages/MarketplaceList";
 import MarketplaceDetail from "./pages/MarketplaceDetail";
+import MarketplaceCreate from "./pages/MarketplaceCreate";
+import LikedItems from "./pages/LikedItems";
 
 const queryClient = new QueryClient();
 
@@ -47,9 +50,12 @@ const App = () => (
                   <Route path="/gyms/:id" element={<GymDetail />} />
                   <Route path="/problems/:id" element={<ProblemDetail />} />
                   <Route path="/board" element={<BoardList />} />
+                  <Route path="/board/create" element={<BoardCreate />} />
                   <Route path="/board/:id" element={<BoardDetail />} />
                   <Route path="/marketplace" element={<MarketplaceList />} />
+                  <Route path="/marketplace/create" element={<MarketplaceCreate />} />
                   <Route path="/marketplace/:id" element={<MarketplaceDetail />} />
+                  <Route path="/liked-items" element={<LikedItems />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </BrowserRouter>

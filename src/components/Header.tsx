@@ -2,6 +2,9 @@ import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import ClimbingIcon from "./ClimbingIcon";
 import { useUserContext } from "@/context/UserContext";
+import { Button } from "@/components/ui/button";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { Heart, User } from "lucide-react";
 
 const Header = () => {
   const location = useLocation();
@@ -50,17 +53,27 @@ const Header = () => {
           </div>
           <div className="ml-auto flex items-center space-x-4">
             {user ? (
-              <>
-                <span className="text-sm text-gray-700 font-semibold">
-                  {user}님
-                </span>
-                <Link
-                  to="/logout"
-                  className="px-3 py-1 rounded bg-gray-200 hover:bg-gray-300 text-sm"
-                >
-                  로그아웃
-                </Link>
-              </>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" className="text-sm">
+                    <User className="w-4 h-4 mr-2" />
+                    {user}님
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuItem asChild>
+                    <Link to="/liked-items">
+                      <Heart className="mr-2 h-4 w-4" />
+                      좋아요한 상품
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link to="/logout">
+                      로그아웃
+                    </Link>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             ) : (
               <Link
                 to="/login"

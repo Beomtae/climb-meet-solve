@@ -7,6 +7,8 @@ interface UserContextType {
   login: (username: string) => void;
   logout: () => void;
   updateProfile: (profile: UserProfile) => void;
+  likedItems: string[];
+  toggleLike: (itemId: string) => void;
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
@@ -23,6 +25,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
     const storedUser = localStorage.getItem(LOCAL_STORAGE_KEY);
     return storedUser ? mockUserProfiles[storedUser] || null : null;
   });
+  const [likedItems, setLikedItems] = useState<string[]>([]);
 
   useEffect(() => {
     if (user) {
@@ -41,8 +44,16 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
     // In a real app, this would update the server
   };
 
+  const toggleLike = (itemId: string) => {
+    setLikedItems(prev => 
+      prev.includes(itemId) 
+        ? prev.filter(id => id !== itemId)
+        : [...prev, itemId]
+    );
+  };
+
   return (
-    <UserContext.Provider value={{ user, userProfile, login, logout, updateProfile }}>
+    <UserContext.Provider value={{ user, userProfile, login, logout, updateProfile, likedItems, toggleLike }}>
       {children}
     </UserContext.Provider>
   );

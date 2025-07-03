@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Plus, MessageSquare, Clock, User } from 'lucide-react';
+import { Plus, MessageSquare, Clock, User, Heart } from 'lucide-react';
 import Header from '@/components/Header';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -91,6 +91,12 @@ const BoardList = () => {
                         <MessageSquare className="w-4 h-4" />
                         {post.comments}
                       </div>
+                      {post.likes && (
+                        <div className="flex items-center gap-1">
+                          <Heart className="w-4 h-4" />
+                          {post.likes}
+                        </div>
+                      )}
                       <div>조회 {post.views}</div>
                     </div>
                   </div>
