@@ -3,7 +3,12 @@ import { Link, useLocation } from "react-router-dom";
 import ClimbingIcon from "./ClimbingIcon";
 import { useUserContext } from "@/context/UserContext";
 import { Button } from "@/components/ui/button";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Heart, User } from "lucide-react";
 
 const Header = () => {
@@ -50,6 +55,26 @@ const Header = () => {
             >
               암장
             </Link>
+            <Link
+              to="/board"
+              className={`text-gray-600 hover:text-orange-600 transition-colors ${
+                location.pathname.startsWith("/board")
+                  ? "text-orange-600 font-semibold"
+                  : ""
+              }`}
+            >
+              게시판
+            </Link>
+            <Link
+              to="/marketplace"
+              className={`text-gray-600 hover:text-orange-600 transition-colors ${
+                location.pathname.startsWith("/marketplace")
+                  ? "text-orange-600 font-semibold"
+                  : ""
+              }`}
+            >
+              중고거래
+            </Link>
           </div>
           <div className="ml-auto flex items-center space-x-4">
             {user ? (
@@ -68,9 +93,7 @@ const Header = () => {
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
-                    <Link to="/logout">
-                      로그아웃
-                    </Link>
+                    <Link to="/logout">로그아웃</Link>
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
