@@ -75,6 +75,16 @@ const Header = () => {
             >
               중고거래
             </Link>
+            <Link
+              to="/beginner-guide"
+              className={`text-gray-600 hover:text-orange-600 transition-colors ${
+                location.pathname.startsWith("/beginner-guide")
+                  ? "text-orange-600 font-semibold"
+                  : ""
+              }`}
+            >
+              초보 가이드
+            </Link>
           </div>
           <div className="ml-auto flex items-center space-x-4">
             {user ? (
